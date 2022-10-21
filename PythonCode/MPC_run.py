@@ -7,6 +7,7 @@ import daug
 import datetime
 import scipy.io
 
+
 tend = 100
 
 if (MODEL == 1):
@@ -20,7 +21,10 @@ x0 = xinit
 xsave = np.zeros((nx, tend+1))
 usave = np.zeros((nu, tend))
 zsave = np.zeros((nu, tend))
-tosave = np.zeros((1, tend))
+if (MODEL == 1):
+    tosave1 = np.zeros((1, tend))
+if (MODEL ==2):
+    tosave2 = np.zeros((1, tend))
 feasflag = 1
 
 xsave[:,0:1]= xinit
@@ -43,7 +47,7 @@ Qsp0 = np.identity(nc)
 
 
 for i in range(tend):
-    start = datetime.datetime.now()
+    start = time.time_ns()
     feasflag = False
 
     actset = actsets
@@ -80,8 +84,6 @@ for i in range(tend):
             actset[iz] = 0 
             qc = 1
         else:
-            O = y-lam 
-            O2 = np.subtract(y, lam)
             i2 = max(y-lam)
             i2z = np.argmax(y-lam)
             if (i2): 
@@ -92,7 +94,7 @@ for i in range(tend):
                 iz = []
         
         if (iz):
-            qu = IGIs[:, iz]
+            qu = IGIs[:, iz] #IGIs is given correctly
             vA = np.transpose(np.matrix(Qmat0i@(qu)))
             qdiv = qc+vA[iz] 
             vAd = np.multiply((1/qdiv),(vA))
@@ -106,17 +108,19 @@ for i in range(tend):
                 break
 
             #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
+            S=vAd@np.matrix(Qmat0i[iz,:])
             Qmat1i = np.subtract(Qmat0i, -vAd@np.matrix(Qmat0i[iz,:]))
             Qmat0i = Qmat1i
 
         else:
             solved = True
             feasflag = True
-    tk = datetime.datetime.now() - start 
+    end = time.time_ns()
+    tk = end-start
     if (feasflag == 0):
         break
     
-    lam = np.multiply((actset),(y)) #element wise?
+    lam = np.multiply((actset),(y)) 
 
     u = HGzu@lam+hifu@x0
     x1 = A@x0+B@u
@@ -124,10 +128,14 @@ for i in range(tend):
     x0 = x1
     xsave[:, i+1] = np.transpose(x0)
     usave[:, i] = np.transpose(u)
-    tosave[0, i] = tk.microseconds
 
+    if (MODEL ==1):
+        tosave1[0, i] = tk #this is in nano seconds
+        
+    if (MODEL ==2):
+        tosave2[0, i] = tk #this is in nano seconds
+        
 
-print(tosave)
 
 
 

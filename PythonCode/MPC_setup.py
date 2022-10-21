@@ -9,8 +9,7 @@ def deb(A):
     print("dimention:")
     print(A.shape)
 
-MODEL = 1
-
+MODEL = 2
 
 
 if (MODEL == 1):
@@ -76,11 +75,11 @@ hy = np.concatenate((hy, np.kron(np.ones((n-1,1)),-1*ymin)))
 #Dette er en hardkodet work-around som leser fra txt.fil generert i matlab og flyttet 
 #manuelt til rett mappe
 if (MODEL == 1):
-    Hn = np.genfromtxt('A.txt') 
-    hn = (np.genfromtxt('B.txt'))
+    Hn = np.genfromtxt('C:\\Users\\ingvilrh\\OneDrive - NTNU\\NTNU\\9.semester\\prosjektoppgave\\Matlab_kode\\A.txt') 
+    hn = (np.genfromtxt('C:\\Users\\ingvilrh\\OneDrive - NTNU\\NTNU\\9.semester\\prosjektoppgave\\Matlab_kode\\B.txt'))
 if (MODEL == 2):
-    Hn = np.genfromtxt('A2.txt') 
-    hn = (np.genfromtxt('B2.txt'))
+    Hn = np.genfromtxt('C:\\Users\\ingvilrh\\OneDrive - NTNU\\NTNU\\9.semester\\prosjektoppgave\\Matlab_kode\\A2.txt') 
+    hn = (np.genfromtxt('C:\\Users\\ingvilrh\\OneDrive - NTNU\\NTNU\\9.semester\\prosjektoppgave\\Matlab_kode\\B2.txt'))
 hn = np.transpose(np.matrix(hn))
 
 Hy = daug(Hy, Hn)
