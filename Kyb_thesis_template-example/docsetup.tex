@@ -1,0 +1,231 @@
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm} % Bold Greek letters, etc.
+\usepackage{color}
+\usepackage[Lenny]{fncychap}
+\usepackage[pdftex,bookmarks=true]{hyperref}
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black
+}
+\usepackage{pdfpages}
+
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{fancyhdr}
+
+%for lang tabell
+\usepackage{longtable}
+%Lagt inn av meg
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Overleaf}
+\lhead{Guides and tutorials}
+\rfoot{Page \thepage}
+%Lagt inn av meg
+\usepackage{times}
+\usepackage{natbib} %Use Harvard style
+\usepackage{float}
+\restylefloat{figure}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\renewcommand*\contentsname{Table of Contents}
+
+%original kode som jeg ikke har tuklet med
+%\pagestyle{fancy}
+%\fancyhf{}
+%\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ %\thechapter.\ #1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+%\renewcommand{\headrulewidth}{0.1ex}
+%\renewcommand{\footrulewidth}{0.1ex}
+%\fancypagestyle{plain}{\fancyhf{}\fancyfoot[LE,RO]{\thepage}\renewcommand{\headrulewidth}{0ex}}
+%\fancypagestyle{plain}{\fancyhf{}\fancyhead[LE,LO]{\thesection}\renewcommand{\headrulewidth}{0ex}}
+
+%hentet fra nettet et sted
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptername}{}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}{}}
+
+\fancyhf{}
+
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\rightmark} % 1. sectionname
+\fancyfoot[C]{\thepage}
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0.4pt}% 
+}
+%hentet fra nettet et sted slutt
+
+%Testing av meg under
+%\fancyhead[LE,LO]{\thechapter \chaptername}
+%\fancyhead[RE,RO]{\thesection \sectionname}
+%\fancyhead[LE,LO]{Venstre side}
+%\fancyhead[RE,RO]{Høyre side}
+%Testing meg slutt
+
+%--------------------------------------------------------------------------%
+% Packages added by SKK
+
+\usepackage{mathrsfs}   % To get the funky "L", more curly than Laplace "L"
+\usepackage{xfrac}      % Provides \sfrac command
+\usepackage{booktabs}   % multicol and multirow for prettier tables
+\usepackage{subfig} 
+\usepackage{lipsum}
+
+% ****************************************************************
+% ******************* Programming ********************************
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% ``listings'' package settings
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\definecolor{deepgreen}{rgb}{0.1,0.8,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{pink}{rgb}{0.53, 0.43, 0.94}
+\definecolor{deepblue}{rgb}{0.035,0.122,0.57}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{alizarin}{rgb}{0.82, 0.1, 0.26}
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\newcommand{\CodeSymbol}[1]{\textcolor{alizarin}{#1}}
+\newcommand{\Parenthesis}[1]{\textcolor{Black}{#1}}
+
+% Matlab settings
+\lstdefinestyle{Matlab}{
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},
+    backgroundcolor=\color{white},
+    showstringspaces=false,
+    numbers=left,%
+    numberstyle={\tiny \color{black}},
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    literate=
+        *{[}{{\CodeSymbol{[}}}{1}
+        {]}{{\CodeSymbol{]}}}{1}
+        {(}{{\Parenthesis{(}}}{1}
+        {)}{{\Parenthesis{)}}}{1}
+        {>}{{\CodeSymbol{$>$}}}{1}
+        {=}{{\CodeSymbol{$=$}}}{1}
+        {+}{{\CodeSymbol{$+$}}}{1}
+        {-}{{\CodeSymbol{$-$}}}{1}
+        {;}{{\CodeSymbol{$;$}}}{1}
+        {<}{{\CodeSymbol{$<$}}}{1}% Colours specific characters
+}
+
+% Python settings
+\lstdefinestyle{Python}{
+    basicstyle=\ttm,
+    otherkeywords={self},             % Add keywords here
+    keywordstyle=\color{orange},
+    emph={MyClass,__init__},          % Custom highlighting
+    emphstyle=\ttb\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    commentstyle=\color{mygreen},
+    backgroundcolor=\color{light-gray},
+    frame=none,
+    numbers=left,
+    numberstyle={\tiny \color{black}},
+    numbersep=9pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    literate=
+        *{[}{{\CodeSymbol{[}}}{1}
+        {]}{{\CodeSymbol{]}}}{1}
+        {(}{{\Parenthesis{(}}}{1}
+        {)}{{\Parenthesis{)}}}{1}
+        {>}{{\CodeSymbol{$>$}}}{1}
+        {=}{{\CodeSymbol{$=$}}}{1}
+        {+}{{\CodeSymbol{$+$}}}{1}
+        {!}{{\CodeSymbol{$!$}}}{1}
+        {-}{{\CodeSymbol{$-$}}}{1}
+        {<}{{\CodeSymbol{$<$}}}{1}% Colours specific characters
+}
+
+% ************ End of programming settings ***********************
+% ****************************************************************
+
+
+% Tikz packages
+\usepackage{tikz, tkz-euclide}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{positioning, calc, arrows}
+\usetikzlibrary{shapes.multipart}
+
+\usepackage{comment}
+\usepackage{todonotes}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{enumerate} % \begin{enumerate}[(i)] - Roman enumeration of lists
+
+\usepackage{caption}
+\usepackage{cleveref}
+\usepackage{apptools}
+
+%  New commands
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\Lagr}{\mathcal{L}} % Funky L
+\newcommand\note[1]{\textcolor{red}{#1}}
+\newcommand{\overbar}[1]{\mkern 3mu\overline{\mkern-3mu#1\mkern-3mu}\mkern 3mu}
+\newcommand*\diff{\mathop{}\!\mathrm{d}} % Differentiation _d_ in integral dx
+\newcommand{\crefrangeconjunction}{--}
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\newcommand*{\prob}{\mathsf{P}} % Probability P
+\let\matrix\uselessmatrix
+\newcommand{\matrix}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+
+\renewcommand\lstlistingname{Algorithm}
+\crefname{listing}{algorithm}{algorithms}
+
+
+% Defining fnutt at end of sqrt{}
+\makeatletter
+    \let\oldr@@t\r@@t
+    \def\r@@t#1#2{%
+    \setbox0=\hbox{$\oldr@@t#1{#2\,}$}\dimen0=\ht0
+    \advance\dimen0-0.2\ht0
+    \setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+    {\box0\lower0.4pt\box2}}
+    \LetLtxMacro{\oldsqrt}{\sqrt}
+    \renewcommand*{\sqrt}[2][\ ]{\oldsqrt[#1]{#2}}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Definition of block diagrams in Tikz
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{
+    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+    tmp/.style = {coordinate},
+    sum/.style = {draw, fill=white, circle, node distance=1cm},
+    input/.style = {coordinate},
+    output/.style = {coordinate},
+    pinstyle/.style = {pin edge={to-, thin, black}}
+}
+
+\usepackage{subfiles} % Compile each file for its self, loaded last in the preamble

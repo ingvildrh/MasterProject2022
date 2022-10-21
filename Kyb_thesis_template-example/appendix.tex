@@ -1,0 +1,14 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+    \section*{\begin{center}{\Huge \textmd{Appendix}}\end{center}}
+    \addcontentsline{toc}{chapter}{Appendix}
+    \renewcommand{\thesubsection}{\Alph{subsection}}
+    \vspace{0.5cm}
+    
+    \subsection{Name of first appendix}
+    \includepdf[pages=-,pagecommand={},width=\textwidth]{example_appendix.pdf}
+    
+    
+\end{document}

@@ -1,0 +1,87 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+    \chapter{Name of chapter 5}
+    %Bare for å generere noe tekst for å se hvordan det ser ut:
+    \lipsum[1]
+    \section{Name of section 1}
+    %Bare for å generere noe tekst for å se hvordan det ser ut:
+    \lipsum[1]
+    
+    \section{Name of section2}
+    %Bare for å generere noe tekst for å se hvordan det ser ut:
+    \lipsum[1]
+    
+    \section{Name of section 3}\label{subsec_stpa_sec}
+    %Bare for å generere noe tekst for å se hvordan det ser ut:
+    \lipsum[1]\\
+    The relation of the most important elements are shown in \autoref{tab:example_table2}.
+    
+    \begin{table}[H]
+        \small
+        \caption{Example table 2.}
+        \label{tab:example_table2}
+        \centering
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{l|l}
+        \cellcolor{gray!25}Number & \cellcolor{gray!25}Related letters \\
+        \Xhline{2\arrayrulewidth}
+            i & abc\\
+            \hline
+            ii & def\\
+            \hline
+            iii & ghi\\
+            \hline
+            iv & jkl\\
+            \hline
+        \end{tabular}
+        \renewcommand{\arraystretch}{1}
+    \end{table}
+    
+    %Bare for å generere noe tekst for å se hvordan det ser ut:
+    \lipsum[1]\\
+    \autoref{tab:example_table_3} shows some connections.
+    
+    %tabellen her viser error, men den funker
+    \begin{table}[H]
+        \small
+        \caption{Example table 3.}
+        \label{tab:example_table_3}
+        \centering
+        \renewcommand{\arraystretch}{0.9}
+        \begin{tabular}{p{90}|p{250}}
+        \rowcolor{gray!25}\multicolumn{1}{p{90}|} {Action} & \multicolumn{1}{p{250}} {Specification}\\
+        \Xhline{3\arrayrulewidth}
+            Do A & \emph{Should be provided when:}\newline \color{white}abc\color{black}abc\\
+            &\color{white}abc\color{black}def\\
+            \cline{2-2}
+            & \emph{Should not be provided when:}\newline \color{white}abc\color{black}ghi\\
+            &\color{white}abc\color{black}jkl\\
+            &\color{white}abc\color{black}mno\\
+            &\color{white}abc\color{black}pqr\\
+            &\color{white}abc\color{black}stu\\
+            &\color{white}abc\color{black}vwx\\
+            &\color{white}abc\color{black}yza\\
+            &\color{white}abc\color{black}bcd\\
+            \Xhline{3\arrayrulewidth}
+            Do B & \emph{Should be provided when:}\newline \color{white}abc\color{black}efg\\
+            \cline{2-2}
+            & \emph{Should not be provided when:}\\&\color{white}abc\color{black}hij\\
+            &\color{white}abc\color{black}klm\\
+            &\color{white}abc\color{black}nop\\
+            \Xhline{3\arrayrulewidth}
+            Do C & \emph{Should be provided when:}\newline \color{white}abc\color{black}qrs \\
+            &\color{white}abc\color{black}tuv\\
+            \cline{2-2}
+            & \emph{Should not be provided when:}\\&\color{white}abc\color{black}wxy\\
+            &\color{white}abc\color{black}zab\\
+            &\color{white}abc\color{black}cde\\
+            \hline
+        \end{tabular}
+        \renewcommand{\arraystretch}{1}
+    \end{table}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\biblio
+\cleardoublepage
+\end{document}
