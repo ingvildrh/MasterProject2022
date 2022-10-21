@@ -2,20 +2,29 @@ import numpy as np
 from MPC_run import *
 import matplotlib.pyplot as plt
 
-exe_time = np.matrix(tosave)
-mlist = []
+if (MODEL ==1):
+    exe_time = np.matrix(tosave1)
+if (MODEL ==2):
+    exe_time = np.matrix(tosave2) 
+
+
+time_list = []
+
 #as matlab returned NaN when reading the first and last number, I add a buffer in both ends
-mlist.append("buff1")
+time_list.append("buff1")
 
 for i in range(100):
-   mlist.append(exe_time[0, i])
+   time_list.append(exe_time[0, i])
 
-mlist.append("buff2")
+time_list.append("buff2")
+
 
 if (MODEL == 1):
-    file = open("execution_timeM1.txt", "w")
-    file.write(str((mlist)))
+    file = open("..//Matlab_kode//execution_timeM1.txt", "w")
+    file.write(str((time_list)))
+    print(time_list)
 
 if (MODEL == 2):
-    file = open("execution_timeM2.txt", "w")
-    file.write(str((mlist)))
+    file = open("..//Matlab_kode//execution_timeM2.txt", "w")
+    file.write(str((time_list)))
+    print(time_list)

@@ -111,15 +111,15 @@ Hy = [Hy;kron(eye(n-1),-C)];
 hy = [hy;kron(ones(n-1,1),-ymin)]; %adding the ymin constraints to hy (repeating ymin n-1 times) 
 %Terminal constraints
 tic
-[Hn,hn] = termset(A,B,C,K,ymax,ymin,umax,umin)
+[Hn,hn] = termset(A,B,C,K,ymax,ymin,umax,umin);
 
 if Model == 1
-    save -ascii 'A.txt' Hn
-    save -ascii 'B.txt' hn
+    save -ascii 'A.txt' Hn;
+    save -ascii 'B.txt' hn;
 end
 if Model == 2
-    save -ascii 'A2.txt' Hn
-    save -ascii 'B2.txt' hn
+    save -ascii 'A2.txt' Hn;
+    save -ascii 'B2.txt' hn;
 end
 toc
 Hy = daug(Hy,Hn); %dowload robust control toolbox

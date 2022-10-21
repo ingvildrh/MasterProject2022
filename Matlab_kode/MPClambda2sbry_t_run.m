@@ -13,10 +13,11 @@ if (Model == 1)
   %  load Model1feasSet
   %  xinit = 0.9999*P10V(10,:)';
     xinit = [-6;1.1];
-    
+    tosave1 = zeros(1,tend);
 elseif (Model == 2)
     xinit = 1.0*[25.5724;25.3546;9.7892;0.2448]; %(1.0: Feasible. 1.04 Feasible. 1.1: Infeasible, (but cycles indefinitely _No, not with updated limits on qdiv).  qdiv not very small. 
                                                  %1.5: Infeasibility caught through qdiv \approx 0. 
+    tosave2 = zeros(1,tend);
 elseif (Model ==3)
   %  xinit = 0.1*randn(nx,1);
   load xinit3
@@ -33,8 +34,8 @@ x0 = xinit;
 xsave = zeros(nx,tend+1);%allocating space for the variables in each step
 usave = zeros(nu,tend);
 zsave = zeros(nu,tend);
-tosave1 = zeros(1,tend);
-tosave2 = zeros(1,tend);
+
+
 feasflag = 1;  %feasflag = 0 indicates infeasible problem. Changes if it is not possible to find a solution
 
 xsave(:,1)=xinit;
@@ -140,7 +141,7 @@ for ik = 1:tend
                        feasflag = false;
                        break
                 end
- 
+                S = vAd*Qmat0i(iz,:);
                 Qmat1i = Qmat0i-vAd*Qmat0i(iz,:);
                 Qmat0i = Qmat1i;                   
         else
