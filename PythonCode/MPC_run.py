@@ -20,7 +20,11 @@ x0 = xinit
 xsave = np.zeros((nx, tend+1))
 usave = np.zeros((nu, tend))
 zsave = np.zeros((nu, tend))
-tosave = np.zeros((1, tend))
+
+if (MODEL == 1):
+    tosave1 = np.zeros((1, tend))
+if (MODEL ==2):
+    tosave2 = np.zeros((1, tend))
 feasflag = 1
 
 xsave[:,0:1]= xinit
@@ -43,7 +47,7 @@ Qsp0 = np.identity(nc)
 
 
 for i in range(tend):
-    start = datetime.datetime.now()
+    start = time.time_ns()    
     feasflag = False
 
     actset = actsets
@@ -106,15 +110,15 @@ for i in range(tend):
                 break
 
             #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
-            Qmat1i = np.subtract(Qmat0i, -vAd@np.matrix(Qmat0i[iz,:]))
+            Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
             Qmat0i = Qmat1i
 
         else:
             solved = True
             feasflag = True
-    tk = datetime.datetime.now() - start 
-    if (feasflag == 0):
-        break
+    end = time.time_ns()
+    tk = end-start
+
     
     lam = np.multiply((actset),(y)) #element wise?
 
@@ -124,13 +128,14 @@ for i in range(tend):
     x0 = x1
     xsave[:, i+1] = np.transpose(x0)
     usave[:, i] = np.transpose(u)
-    tosave[0, i] = tk.microseconds
 
+    if (MODEL ==1):
+        tosave1[0, i] = tk #this is in nano seconds
 
-print(tosave)
+    if (MODEL ==2):
+        tosave2[0, i] = tk #this is in nano seconds
 
-
-
+print("done")
 
 
 
