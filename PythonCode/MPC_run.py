@@ -44,6 +44,7 @@ hifu = -hif[0:nu, :]
 actsets = np.zeros((nc,1))
 Qsp0 = np.identity(nc)
 
+while_iterations = []
 
 
 for i in range(tend):
@@ -56,19 +57,17 @@ for i in range(tend):
     ix = 0
 
     Qmat0i = Qsp0
-    ylist = []
-    vAdlist = []
-
+    qu_list = []
+    
     y0 = np.subtract(-Sz.dot(x0), Wz)
+    num_iterations = 0
     while (not (solved)):
-
+        num_iterations = num_iterations +1
         ix = ix +1
         
         if (ix == 1): 
             y = y0
         else:
-            q = (y0[iz].item())*vAd
-            y01 = np.squeeze(y0)
             y = np.subtract((y0), (y0[iz].item())*vAd)
             y0 = y
         
@@ -84,8 +83,6 @@ for i in range(tend):
             actset[iz] = 0 
             qc = 1
         else:
-            O = y-lam 
-            O2 = np.subtract(y, lam)
             i2 = max(y-lam)
             i2z = np.argmax(y-lam)
             if (i2): 
@@ -97,6 +94,7 @@ for i in range(tend):
         
         if (iz):
             qu = IGIs[:, iz]
+            qu_list.append(qu)
             vA = np.transpose(np.matrix(Qmat0i@(qu)))
             qdiv = qc+vA[iz] 
             vAd = np.multiply((1/qdiv),(vA))
@@ -110,15 +108,20 @@ for i in range(tend):
                 break
 
             #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
-            Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
+            o=vAd@np.matrix(Qmat0i[iz,:])
+            Qmat1i = np.subtract(Qmat0i, -vAd@np.matrix(Qmat0i[iz,:]))
+            #Qmat1i = Qmat0i-vAd@np.matrix(Qmat0i[iz,:])
             Qmat0i = Qmat1i
 
         else:
             solved = True
             feasflag = True
+    
+    
     end = time.time_ns()
     tk = end-start
 
+    while_iterations.append(num_iterations)
     
     lam = np.multiply((actset),(y)) #element wise?
 
