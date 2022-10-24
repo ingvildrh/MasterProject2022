@@ -60,9 +60,11 @@ actsets = sparse(zeros(nc,1)); %allocating space for active set
 Qsp0 = speye(nc); %speye returns a sparse nbyn identity matrix with ones on diagonal
 
 
-tt=tic;
+%tt=tic;
 %for ik = 1:1
 %algorithm 1 solving for tend timesteps
+while_iterations = zeros(1, 100);
+
 for ik = 1:tend
     %ik;
     %Implicit MPC problem.  Hoping to do this efficiently...
@@ -79,7 +81,9 @@ for ik = 1:tend
     
     Qmat0i = Qsp0;
     y0 = -Sz*x0-Wz; %equation 9?
+    num_iterations = 0;
     while (~solved)
+        num_iterations = num_iterations + 1;
         ix = ix +1;
         
         if (ix == 1) %first time, make sure to set y to y0
@@ -104,8 +108,6 @@ for ik = 1:tend
             actset(iz) = 0; %remove from the active set on that iz index
             qc = 1; % Remove constraint from active set
         else
-            
-             O = y-lam;
              [i2,i2z] = max(y-lam); %is it sufficient to just think that i2>0?
            % [i2,i2z] = max(y.*(ones(nc,1)-actset));
             if (i2 <= 10*eps)
@@ -142,7 +144,8 @@ for ik = 1:tend
                        break
                 end
                 S = vAd*Qmat0i(iz,:);
-                Qmat1i = Qmat0i-vAd*Qmat0i(iz,:);
+                o=vAd*Qmat0i(iz,:)
+                Qmat1i = Qmat0i+vAd*Qmat0i(iz,:);
                 Qmat0i = Qmat1i;                   
         else
             solved = true;
@@ -151,6 +154,7 @@ for ik = 1:tend
         end
         
     end
+    while_iterations(1,ik) = num_iterations;
     tk = toc(to);
     if (feasflag == 0)
         break
@@ -197,21 +201,27 @@ elseif (Model == 2)
     figure(1)
     tx = linspace(0,tend,tend+1);
     plot(tx,y(1,:),'b',tx,y(2,:),'r')
+    legend('y1', 'y2')
     title('Output trajectories')
-    ylabel('x1')
+    ylabel('y')
     xlabel('timestep')
 
 
     figure(2)
+    ylabel('y')
     tu = linspace(0,tend-1,tend);
     plot(tu,usave(1,:),'b',tu,usave(2,:),'r')
+    title('Input trajectories')
+    legend('u1', 'u2')
+    xlabel('timestep')
 elseif (Model == 3)
     y = C*xsave;                        
     figure(1)
     tx = linspace(0,tend,tend+1);
     plot(tx,y(1,:),'b',tx,y(2,:),'r',tx,y(3,:),'k',tx,y(4,:),'g')
+    legend('y1', 'y2')
     title('Output trajectories')
-
+    xlabel('timestep')
     figure(2)
     tu = linspace(0,tend-1,tend);
     plot(tu,usave(1,:),'b',tu,usave(2,:),'r',tu,usave(3,:),'k',tu,usave(4,:),'g')
