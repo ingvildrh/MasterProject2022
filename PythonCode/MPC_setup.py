@@ -9,7 +9,7 @@ def deb(A):
     print("dimention:")
     print(A.shape)
 
-MODEL = 1
+MODEL = 2
 
 
 

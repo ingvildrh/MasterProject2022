@@ -109,7 +109,7 @@ for i in range(tend):
 
             #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
             o=vAd@np.matrix(Qmat0i[iz,:])
-            Qmat1i = np.subtract(Qmat0i, -vAd@np.matrix(Qmat0i[iz,:]))
+            Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
             #Qmat1i = Qmat0i-vAd@np.matrix(Qmat0i[iz,:])
             Qmat0i = Qmat1i
 

@@ -132,7 +132,7 @@ for ik = 1:tend
  
                 %noe som ikke er nødvendig, ikke forstå
                 if ((abs(qdiv) < 1e-13) | (abs(qdiv) > 1e12))
-                    toctosave2
+                    toc
                 %Will only enter here (some times) when adding a new constraint    
                 % Heuristically seems like a reliable test for infeasibility
 
