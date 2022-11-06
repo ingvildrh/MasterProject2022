@@ -61,4 +61,25 @@ if (MODEL ==1):
     plt.ylabel("u")
     plt.grid()
     plt.show()
-    input()
+
+if (MODEL == 2):
+    ym = C@xsave 
+    output_trajectories = plt.figure(1)
+    plt.plot(np.arange(tend+1), ym[0], color="green", label="ym1")
+    plt.plot(np.arange(tend+1), ym[1], color="blue", label="ym2")
+    plt.title("Output trajectories")
+    plt.xlabel("timestep")
+    plt.ylabel("ym")
+    plt.legend(loc="lower center",fontsize=10,ncol=2)
+    plt.grid()
+    
+    ufig = plt.figure(2)
+    plt.plot(np.arange(tend), usave[0], color="blue", label="u1")
+    plt.plot(np.arange(tend), usave[1], color="green", label="u2")
+    plt.title("Input trajectories")
+    plt.xlabel("timestep")
+    plt.legend(loc="lower center",fontsize=10,ncol=2)
+    plt.ylabel("u")
+    plt.grid()
+    plt.show()
+
