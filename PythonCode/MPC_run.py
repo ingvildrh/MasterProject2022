@@ -11,9 +11,10 @@ tend = 100
 
 if (MODEL == 1):
     xinit = np.matrix([[5], [-2]])
-    xinit = np.matrix([[-6], [1.1]])
+    tosave1 = np.zeros((1, tend))
 if (MODEL == 2):
     xinit = np.matrix([[25.5724],[25.3546],[9.7892],[0.2448]])
+    tosave2 = np.zeros((1, tend))
 
 x0 = xinit
 
@@ -21,15 +22,9 @@ xsave = np.zeros((nx, tend+1))
 usave = np.zeros((nu, tend))
 zsave = np.zeros((nu, tend))
 
-if (MODEL == 1):
-    tosave1 = np.zeros((1, tend))
-if (MODEL ==2):
-    tosave2 = np.zeros((1, tend))
 feasflag = 1
 
 xsave[:,0:1]= xinit
-
-f = np.zeros((n*nu, 1))
 
 nc = np.shape(Gz)[0]
 Hinv = np.linalg.inv(Hess) #stemmer
@@ -41,28 +36,27 @@ HGz = -Hinv@np.transpose(Gz) #stemmer
 HGzu = HGz[0:nu, :]
 hifu = -hif[0:nu, :]
 
-actsets = np.zeros((nc,1))
-Qsp0 = np.identity(nc)
+actset0 = np.zeros((nc,1))
+Qmat0i = np.identity(nc) #denne er overflødig siden vi setter dne i for loopen
 
-while_iterations = []
-
+while_iterations = [] #for counting the while iterations in each step
 
 for i in range(tend):
     start = time.time_ns()    
+    
     feasflag = False
 
-    actset = actsets
+    actset = actset0
     solved = False
-    izold = 0
     ix = 0
 
-    Qmat0i = Qsp0
-    qu_list = []
+    Qmat0i = np.identity(nc)
     
     y0 = np.subtract(-Sz.dot(x0), Wz)
-    num_iterations = 0
+
+    
     while (not (solved)):
-        num_iterations = num_iterations +1
+        
         ix = ix +1
         
         if (ix == 1): 
@@ -75,7 +69,7 @@ for i in range(tend):
         i1 = min(lam)
         i1z = np.argmin(lam)
 
-        if (i1>=-10*np.finfo(float).eps):
+        if (i1>=0):
             i1 = []
 
         if (i1):
@@ -85,6 +79,8 @@ for i in range(tend):
         else:
             i2 = max(y-lam)
             i2z = np.argmax(y-lam)
+            if (i2 <= 0):
+                i2= []
             if (i2): 
                 iz = i2z
                 actset[iz] = 1
@@ -94,10 +90,9 @@ for i in range(tend):
         
         if (iz):
             qu = IGIs[:, iz]
-            qu_list.append(qu)
             vA = np.transpose(np.matrix(Qmat0i@(qu)))
             qdiv = qc+vA[iz] 
-            vAd = np.multiply((1/qdiv),(vA))
+            
             if ((abs(qdiv) < 1*math.e**(-13)) or (abs(qdiv) > 1*math.e**(12))):
 
                 feasflag = 0
@@ -107,6 +102,7 @@ for i in range(tend):
 
                 break
 
+            vAd = np.multiply((1/qdiv),(vA))
             #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
             o=vAd@np.matrix(Qmat0i[iz,:])
             Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
@@ -120,10 +116,12 @@ for i in range(tend):
     
     end = time.time_ns()
     tk = end-start
-
-    while_iterations.append(num_iterations)
+    while_iterations.append(ix)
     
-    lam = np.multiply((actset),(y)) #element wise?
+    if (feasflag == 0):
+        break
+    
+    #lam = np.multiply((actset),(y)) #element wise?
 
     u = HGzu@lam+hifu@x0
     x1 = A@x0+B@u
@@ -137,6 +135,7 @@ for i in range(tend):
 
     if (MODEL ==2):
         tosave2[0, i] = tk #this is in nano seconds
+        print(while_iterations)
 
 print("done")
 
