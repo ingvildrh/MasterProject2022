@@ -39,7 +39,8 @@ hifu = -hif[0:nu, :]
 actset0 = np.zeros((nc,1))
 Qmat0i = np.identity(nc) #denne er overflødig siden vi setter dne i for loopen
 
-while_iterations = [] #for counting the while iterations in each step
+while_iterations1 = [] #for counting the while iterations in each step
+while_iterations2 = []
 
 for i in range(tend):
     start = time.time_ns()    
@@ -116,8 +117,10 @@ for i in range(tend):
     
     end = time.time_ns()
     tk = end-start
-    while_iterations.append(ix)
-    
+    if (MODEL==1):
+        while_iterations1.append(ix)
+    if (MODEL==2):
+        while_iterations2.append(ix)
     if (feasflag == 0):
         break
     
@@ -135,7 +138,7 @@ for i in range(tend):
 
     if (MODEL ==2):
         tosave2[0, i] = tk #this is in nano seconds
-        print(while_iterations)
+        
 
 print("done")
 

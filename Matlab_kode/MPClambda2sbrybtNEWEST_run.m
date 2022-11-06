@@ -13,9 +13,11 @@ tend = 100;
 if (Model == 1)
     xinit = [5;-2];
     tosave1 = zeros(1,tend);
+    while_iterations1 = zeros(1, 100);
 elseif (Model == 2)
     xinit = 1.0*[25.5724;25.3546;9.7892;0.2448]; %(1.0: Feasible. 1.04 Feasible. 1.1: Infeasible, (but cycles indefinitely _No, not with updated limits on qdiv).  qdiv not very small. 
                                                  %1.5: Infeasibility caught through qdiv \approx 0. 
+    while_iterations2 = zeros(1, 100);                                         
 elseif (Model ==3)
   %  xinit = 0.1*randn(nx,1);
   load xinit3
@@ -53,7 +55,7 @@ Qmat0i = speye(nc);
 
 tt = tic;
 %for ik = 1:1
-while_iterations = zeros(1, 100);
+
 
 for ik = 1:tend
     %ik;
@@ -134,8 +136,13 @@ for ik = 1:tend
         end
         
     end
-    while_iterations(1,ik) = ix;
     tk = toc(to);
+    if Model == 1
+        while_iterations1(1,ik) = ix;
+    end
+    if Model == 2
+        while_iterations2(1,ik) = ix;
+    end
     if (feasflag == 0)
         break
     end
