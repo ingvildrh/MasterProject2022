@@ -41,3 +41,24 @@ if (MODEL == 2):
 
     print(iteration_list)
     print(time_list)
+
+#Just a plot similar to the one in matlab so that we can compare states and inputs with matlab
+if (MODEL ==1):
+    states = plt.figure(1)
+    plt.plot(np.arange(tend+1),xsave[0], color="green", label="x1")
+    plt.plot(np.arange(tend+1), xsave[1], color="blue", label="x2")
+    plt.title("State trajectories")
+    plt.legend(loc="lower center",fontsize=10,ncol=2)
+    plt.xlabel("timestep")
+    plt.ylabel("x")
+    plt.grid()
+    
+
+    input = plt.figure(2)
+    plt.plot(np.arange(tend), usave[0], color="blue", label="u")
+    plt.title("System input")
+    plt.xlabel("timestep")
+    plt.ylabel("u")
+    plt.grid()
+    plt.show()
+    input()
