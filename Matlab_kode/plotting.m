@@ -29,6 +29,7 @@ if (Model == 1)
     hold off;
     legend('Python','Matlab')
     title('Execution time model 1');
+    set(gca, 'YScale', 'log')
     ylabel('time [seconds]')
     xlabel('step')
     %ylim([0, 0.00004])
