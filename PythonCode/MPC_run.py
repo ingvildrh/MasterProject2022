@@ -43,6 +43,7 @@ Qmat0i = np.identity(nc) #denne er overflødig siden vi setter dne i for loopen
 while_iterations1 = [] #for counting the while iterations in each step
 while_iterations2 = []
 
+tot = time.time_ns() 
 for i in range(tend):
     start = time.time_ns()    
     
@@ -136,6 +137,12 @@ for i in range(tend):
 
     if (MODEL ==2):
         tosave2[0, i] = tk #this is in nano seconds
+
+end = time.time_ns()
+total_time = end-tot
+
+print("Total runtime s: ")
+print(total_time/10**(9))
         
 
 print("done")

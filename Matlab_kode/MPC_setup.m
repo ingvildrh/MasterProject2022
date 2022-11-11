@@ -1,4 +1,4 @@
-Model = 2;
+Model = 3;
 
 if (Model == 1)
     % Discrete double integrator
@@ -90,7 +90,7 @@ if (Model == 3)
 end
 
 %K is the gain matrix 
-[K,S,E]=lqr(sys,Q,R)
+[K,S,E]=lqr(sys,Q,R);
 
 %Hva skjer her?
 %kron returns the Kronecker tensor product
@@ -106,7 +106,7 @@ Rh = kron(eye(n),R);
 Hy = kron(eye(n-1),C);
 hy = kron(ones(n-1,1),ymax); %making a ymax vector (repeating ymax n-1 times) 
 %ymin constraint
-F = kron(eye(n-1),-C)
+F = kron(eye(n-1),-C);
 Hy = [Hy;kron(eye(n-1),-C)];
 hy = [hy;kron(ones(n-1,1),-ymin)]; %adding the ymin constraints to hy (repeating ymin n-1 times) 
 %Terminal constraints

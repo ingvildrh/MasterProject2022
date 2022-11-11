@@ -23,9 +23,9 @@ python_iterations2 = W2(2:101);
 if (Model == 1)
     
     f = figure("Name", "myfig");
-    plot(python_times1);
+    plot(python_times1, 'LineWidth', 2);
     hold on;
-    plot(tosave1);
+    plot(tosave1, 'LineWidth', 2);
     hold off;
     legend('Python','Matlab')
     title('Execution time model 1');
@@ -86,25 +86,26 @@ grid
 
 fig = figure;
 subplot(2,1,1)
-plot(python_iterations1);
+plot(python_iterations1, 'LineWidth', 2, 'LineStyle','--');
 hold on;
-plot(while_iterations1);
+plot(while_iterations1, 'LineWidth', 1);
 hold off;
 legend('Python','Matlab')
 title('While iterations each step model 1');
 ylabel('iterations')
 xlabel('step')
-%ylim([0, 0.004])
+
+ylim([0,7])
 grid
 
 subplot(2,1,2)
-plot(python_iterations2);
+plot(python_iterations2, 'LineWidth', 2, 'LineStyle','--');
 hold on;
-plot(while_iterations2);
+plot(while_iterations2, 'LineWidth', 1);
 hold off;
 legend('Python','Matlab')
 title('While iterations each step model 2');
 ylabel('iterations')
 xlabel('step')
-%ylim([0, 0.004])
+ylim([0,5])
 grid

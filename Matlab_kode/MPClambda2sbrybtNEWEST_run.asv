@@ -56,7 +56,7 @@ Qmat0i = speye(nc);
 tt = tic;
 %for ik = 1:1
 
-
+total_time = tic;
 for ik = 1:tend
     %ik;
     %Implicit MPC problem.  Hoping to do this efficiently...
@@ -173,6 +173,7 @@ for ik = 1:tend
    % tc = toc(tc);
    % tcsave(1,ik) = tc;
 end
+total_time = toc(tot)
 
 toc(tt)
 
@@ -181,17 +182,19 @@ if (Model == 1)
     figure(1)
     tx = linspace(0,tend,tend+1);
     plot(tx,xsave(1,:),'b',tx,xsave(2,:),'r')
+    legend('x1', 'x2')
     ylabel('x')
     xlabel('timestep')
-    legend('x1', 'x2')
     title('State trajectories')
 
     figure(2)
+
     tu = linspace(0,tend-1,tend);
-    legend('u')
-    ylabel('x')
-    xlabel('timestep')
     plot(tu,usave)
+    ylabel('u')
+    xlabel('timestep')
+    title('System input')
+    
     
 elseif (Model == 2)
     ym = C*xsave;                        

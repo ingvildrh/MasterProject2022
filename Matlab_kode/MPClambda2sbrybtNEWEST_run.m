@@ -56,7 +56,7 @@ Qmat0i = speye(nc);
 tt = tic;
 %for ik = 1:1
 
-
+tot = tic;
 for ik = 1:tend
     %ik;
     %Implicit MPC problem.  Hoping to do this efficiently...
@@ -173,6 +173,7 @@ for ik = 1:tend
    % tc = toc(tc);
    % tcsave(1,ik) = tc;
 end
+total_time = toc(tot);
 
 toc(tt)
 
