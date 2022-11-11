@@ -36,6 +36,7 @@ HGz = -Hinv@np.transpose(Gz) #stemmer
 HGzu = HGz[0:nu, :]
 hifu = -hif[0:nu, :]
 
+actset = np.zeros((nc,1))
 actset0 = np.zeros((nc,1))
 Qmat0i = np.identity(nc) #denne er overflødig siden vi setter dne i for loopen
 
@@ -47,7 +48,7 @@ for i in range(tend):
     
     feasflag = False
 
-    actset = actset0
+    actset = np.zeros((nc,1))
     solved = False
     ix = 0
 
@@ -84,7 +85,7 @@ for i in range(tend):
                 i2= []
             if (i2): 
                 iz = i2z
-                actset[iz] = 1
+                actset[iz] = 1 #hvorfor setter denne her to variabler, både actset og actset0??
                 qc = -1
             else:
                 iz = []
@@ -104,10 +105,7 @@ for i in range(tend):
                 break
 
             vAd = np.multiply((1/qdiv),(vA))
-            #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
-            o=vAd@np.matrix(Qmat0i[iz,:])
             Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
-            #Qmat1i = Qmat0i-vAd@np.matrix(Qmat0i[iz,:])
             Qmat0i = Qmat1i
 
         else:

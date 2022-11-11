@@ -12,3 +12,7 @@ import datetime
 
 A = np.array([[1, 2, 3, 4], [5,6,7,8], [1, 2, 3, 4], [1, 2, 3, 4]])
 print(A[:, 1])
+
+myvar0 = 5
+myvar = 2
+print(myvar0)
