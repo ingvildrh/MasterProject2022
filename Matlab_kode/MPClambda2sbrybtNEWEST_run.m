@@ -184,7 +184,7 @@ if (Model == 1)
     plot(tx,xsave(1,:),'b',tx,xsave(2,:),'r')
     legend('x1', 'x2')
     ylabel('x')
-    xlabel('timestep')
+    xlabel('time step')
     title('State trajectories')
 
     figure(2)
@@ -192,7 +192,7 @@ if (Model == 1)
     tu = linspace(0,tend-1,tend);
     plot(tu,usave)
     ylabel('u')
-    xlabel('timestep')
+    xlabel('time step')
     title('System input')
     
     
@@ -201,12 +201,21 @@ elseif (Model == 2)
     figure(1)
     tx = linspace(0,tend,tend+1);
     plot(tx,ym(1,:),'b',tx,ym(2,:),'r')
+    legend('ym1', 'ym2')
+    xlabel('time step')
+    ylabel('ym')
     title('Output trajectories')
+    grid
 
 
     figure(2)
     tu = linspace(0,tend-1,tend);
     plot(tu,usave(1,:),'b',tu,usave(2,:),'r')
+    legend('u1', 'u2')
+    ylabel('u')
+    xlabel('time step')
+    title('Input trajectories')
+    grid
 elseif (Model == 3)
     ym = C*xsave;                        
     figure(1)

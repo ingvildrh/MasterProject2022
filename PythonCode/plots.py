@@ -2,7 +2,7 @@ import numpy as np
 from MPC_run import *
 import matplotlib.pyplot as plt
 
-PYTHONPLOTS = 0
+PYTHONPLOTS = 1
 
 
 if (MODEL ==1):
@@ -12,13 +12,19 @@ if (MODEL ==2):
     exe_time = np.matrix(tosave2) 
     iterations = while_iterations2
 
+'''
+average_iterations = sum(iterations)/len(iterations)
+print("average iterations: ")
+print(average_iterations)
+'''
+
 #Plotting runtime for Python algorithm 
 if (PYTHONPLOTS):
     if (MODEL == 1):
         plt.figure(3)
         plt.plot(np.arange(tend), tosave1[0,:], color="green", label="Time")
         plt.title("Runtime Python Model " + str(MODEL))
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.ylabel("Runtime")
         plt.grid()
 
@@ -26,7 +32,7 @@ if (PYTHONPLOTS):
         plt.figure(3)
         plt.plot(np.arange(tend), tosave2[0,:], color="green", label="Time")
         plt.title("Runtime Python Model " + str(MODEL))
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.ylabel("Runtime")
         plt.grid()
 
@@ -81,7 +87,7 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend+1), xsave[1], color="blue", label="x2")
         plt.title("State trajectories")
         plt.legend(loc="lower center",fontsize=10,ncol=2)
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.ylabel("x")
         plt.grid()
         
@@ -89,7 +95,7 @@ if (PYTHONPLOTS):
         input = plt.figure(2)
         plt.plot(np.arange(tend), usave[0], color="blue", label="u")
         plt.title("System input")
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.ylabel("u")
         plt.grid()
         plt.show()
@@ -100,7 +106,7 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend+1), ym[0], color="green", label="ym1")
         plt.plot(np.arange(tend+1), ym[1], color="blue", label="ym2")
         plt.title("Output trajectories")
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.ylabel("ym")
         plt.legend(loc="lower center",fontsize=10,ncol=2)
         plt.grid()
@@ -109,7 +115,7 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend), usave[0], color="blue", label="u1")
         plt.plot(np.arange(tend), usave[1], color="green", label="u2")
         plt.title("Input trajectories")
-        plt.xlabel("timestep")
+        plt.xlabel("time step")
         plt.legend(loc="lower center",fontsize=10,ncol=2)
         plt.ylabel("u")
         plt.grid()

@@ -23,13 +23,15 @@ python_iterations2 = W2(2:101);
 if (Model == 1)
     
     f = figure("Name", "myfig");
+    axes('XScale', 'linear', 'YScale', 'log')
+    hold on;
     plot(python_times1, 'LineWidth', 2);
     hold on;
     plot(tosave1, 'LineWidth', 2);
     hold off;
     legend('Python','Matlab')
     title('Execution time model 1');
-    set(gca, 'YScale', 'log')
+    %set(gca, 'YScale', 'log')
     ylabel('time [seconds]')
     xlabel('step')
     %ylim([0, 0.00004])
@@ -40,6 +42,8 @@ end
 if (Model == 2)
 
     f = figure("Name", "myfig");
+    axes('XScale', 'linear', 'YScale', 'log')
+    hold on;
     plot(python_times2);
     hold on;
     plot(tosave2);

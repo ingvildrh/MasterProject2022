@@ -1,4 +1,4 @@
-Model = 3;
+Model = 2;
 
 if (Model == 1)
     % Discrete double integrator
