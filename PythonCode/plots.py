@@ -2,7 +2,7 @@ import numpy as np
 from MPC_run import *
 import matplotlib.pyplot as plt
 
-PYTHONPLOTS = 1
+PYTHONPLOTS = 0
 
 
 if (MODEL ==1):

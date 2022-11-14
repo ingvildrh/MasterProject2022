@@ -73,7 +73,7 @@ def main():
                 y0 = y
             
             lam = np.multiply((y),actset) #elementvis?
-            i1 = min(lam)
+            i1=lam.min()
             i1z = np.argmin(lam)
 
             if (i1>=0):
@@ -84,7 +84,7 @@ def main():
                 actset[iz] = 0 
                 qc = 1
             else:
-                i2 = max(y-lam)
+                i2 = (y-lam).max()
                 i2z = np.argmax(y-lam)
                 if (i2 <= 0):
                     i2= []
