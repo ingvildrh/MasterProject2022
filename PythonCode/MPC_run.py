@@ -8,9 +8,11 @@ import datetime
 import scipy.io
 import cProfile
 
+from timeit import default_timer as timer
+
 tend = 100
 
-
+@profile
 def main():
     if (MODEL == 1):
         xinit = np.matrix([[5], [-2]])
@@ -46,44 +48,35 @@ def main():
     while_iterations1 = [] #for counting the while iterations in each step
     while_iterations2 = []
 
-    tot = time.time_ns() 
+    tot = timer()
 
     for i in range(tend):
-        start = time.time_ns()    
-        
+        start = timer()
         feasflag = False
-
         actset = np.zeros((nc,1))
         solved = False
         ix = 0
-
         Qmat0i = np.identity(nc)
-        
         y0 = np.subtract(-Sz.dot(x0), Wz)
-
-        
         while (not (solved)):
-            
             ix = ix +1
-            
             if (ix == 1): 
                 y = y0
             else:
                 y = np.subtract((y0), (y0[iz].item())*vAd)
                 y0 = y
-            
-            lam = np.multiply((y),actset) #elementvis?
+            lam = np.multiply((y),actset)
+            #i1 = min(lam)
             i1=lam.min()
             i1z = np.argmin(lam)
-
             if (i1>=0):
                 i1 = []
-
             if (i1):
                 iz = i1z
                 actset[iz] = 0 
                 qc = 1
             else:
+                #i2 = max(y-lam)
                 i2 = (y-lam).max()
                 i2z = np.argmax(y-lam)
                 if (i2 <= 0):
@@ -118,7 +111,7 @@ def main():
                 feasflag = True
         
         
-        end = time.time_ns()
+        end = timer()
         tk = end-start
         if (MODEL==1):
             while_iterations1.append(ix)
@@ -142,11 +135,11 @@ def main():
         if (MODEL ==2):
             tosave2[0, i] = tk #this is in nano seconds
 
-    end = time.time_ns()
-    total_time = end-tot
+    end_tot = timer()
+    total_time = end_tot-tot
 
     print("Total runtime s: ")
-    print(total_time/10**(9))
+    print(total_time)
             
 
     print("done")

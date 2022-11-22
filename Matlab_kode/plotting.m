@@ -3,7 +3,7 @@ format long
 %Reading the execution time from Python Model 1
 B = readmatrix('execution_timeM1.txt');
 python_times1 = B
-python_times1 = python_times1(2:101).*10^(-9)
+python_times1 = python_times1(2:101)
 
 %Reading while iterations from Python Model 1
 W1 = readmatrix('while_iterations1.txt');
@@ -13,7 +13,7 @@ python_iterations1 = W1(2:101);
 %Reading the execution time from Python Model 2
 C = readmatrix('execution_timeM2.txt');
 python_times2 = C
-python_times2 = python_times2(2:101).*10^(-9)
+python_times2 = python_times2(2:101)
 
 %Reading while iterations from Python Model 2
 W2 = readmatrix('while_iterations2.txt');
@@ -25,9 +25,9 @@ if (Model == 1)
     f = figure("Name", "myfig");
     axes('XScale', 'linear', 'YScale', 'log')
     hold on;
-    plot(python_times1, 'LineWidth', 2);
+    plot(python_times1);
     hold on;
-    plot(tosave1, 'LineWidth', 2);
+    plot(tosave1);
     hold off;
     legend('Python','Matlab')
     title('Execution time model 1');

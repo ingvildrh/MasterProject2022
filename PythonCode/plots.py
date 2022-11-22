@@ -2,7 +2,7 @@ import numpy as np
 from MPC_run import *
 import matplotlib.pyplot as plt
 
-PYTHONPLOTS = 0
+PYTHONPLOTS = 1
 
 
 if (MODEL ==1):
@@ -12,11 +12,10 @@ if (MODEL ==2):
     exe_time = np.matrix(tosave2) 
     iterations = while_iterations2
 
-'''
 average_iterations = sum(iterations)/len(iterations)
 print("average iterations: ")
 print(average_iterations)
-'''
+
 
 #Plotting runtime for Python algorithm 
 if (PYTHONPLOTS):
