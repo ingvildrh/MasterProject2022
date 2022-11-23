@@ -12,7 +12,7 @@ from timeit import default_timer as timer
 
 tend = 100
 
-@profile
+#@profile
 def main():
     if (MODEL == 1):
         xinit = np.matrix([[5], [-2]])
@@ -103,7 +103,10 @@ def main():
                     break
 
                 vAd = np.multiply((1/qdiv),(vA))
-                Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
+                vAdQmat0i = vAd@np.matrix(Qmat0i[iz,:])
+                Qmat1i = np.subtract(Qmat0i,  vAdQmat0i)
+                #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
+
                 Qmat0i = Qmat1i
 
             else:
