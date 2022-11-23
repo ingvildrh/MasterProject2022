@@ -12,7 +12,7 @@ from timeit import default_timer as timer
 
 tend = 100
 
-#@profile
+@profile
 def main():
     if (MODEL == 1):
         xinit = np.matrix([[5], [-2]])
@@ -32,18 +32,20 @@ def main():
     xsave[:,0:1]= xinit
 
     nc = np.shape(Gz)[0]
+    Qreset = np.identity(nc) #improvement 3
     Hinv = np.linalg.inv(Hess) #stemmer
-    IGi = np.subtract(np.identity(nc), (Gz.dot(Hinv)).dot(np.transpose(Gz)))
-    IGIs = (IGi) #stemmer, but not sparse
-    hif = Hinv@f0 #stemmer
+    GzHinv = Gz.dot(Hinv)
+    GzHinvGz = GzHinv.dot(np.transpose(Gz))
+    IGIs = np.subtract(Qreset, GzHinvGz)
+    #IGi = np.subtract(np.identity(nc), (Gz.dot(Hinv)).dot(np.transpose(Gz)))
+    hif = Hinv@f0
 
-    HGz = -Hinv@np.transpose(Gz) #stemmer
+    HGz = -Hinv@np.transpose(Gz) 
     HGzu = HGz[0:nu, :]
     hifu = -hif[0:nu, :]
 
-    actset = np.zeros((nc,1))
-    actset0 = np.zeros((nc,1))
-    Qmat0i = np.identity(nc) #denne er overflødig siden vi setter dne i for loopen
+
+
 
     while_iterations1 = [] #for counting the while iterations in each step
     while_iterations2 = []
@@ -56,7 +58,8 @@ def main():
         actset = np.zeros((nc,1))
         solved = False
         ix = 0
-        Qmat0i = np.identity(nc)
+        #Qmat0i = np.identity(nc) before improvement 3
+        Qmat0i = Qreset #improvement 3
         y0 = np.subtract(-Sz.dot(x0), Wz)
         while (not (solved)):
             ix = ix +1
@@ -66,8 +69,8 @@ def main():
                 y = np.subtract((y0), (y0[iz].item())*vAd)
                 y0 = y
             lam = np.multiply((y),actset)
-            #i1 = min(lam)
-            i1=lam.min()
+            #i1 = min(lam) before improvement 1
+            i1=lam.min() #improvement 1
             i1z = np.argmin(lam)
             if (i1>=0):
                 i1 = []
@@ -76,14 +79,15 @@ def main():
                 actset[iz] = 0 
                 qc = 1
             else:
-                #i2 = max(y-lam)
-                i2 = (y-lam).max()
-                i2z = np.argmax(y-lam)
+                #i2 = max(y-lam) before improvement 1
+                y_lam = y-lam
+                i2 = (y_lam).max() #improvement 1
+                i2z = np.argmax(y_lam)
                 if (i2 <= 0):
                     i2= []
                 if (i2): 
                     iz = i2z
-                    actset[iz] = 1 #hvorfor setter denne her to variabler, både actset og actset0??
+                    actset[iz] = 1
                     qc = -1
                 else:
                     iz = []
@@ -102,7 +106,9 @@ def main():
 
                     break
 
-                vAd = np.multiply((1/qdiv),(vA))
+                #vAd = np.multiply((1/qdiv),(vA)) before improvement 1
+                vAd = np.divide((vA), qdiv) #improvement 1
+                
                 vAdQmat0i = vAd@np.matrix(Qmat0i[iz,:])
                 Qmat1i = np.subtract(Qmat0i,  vAdQmat0i)
                 #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
