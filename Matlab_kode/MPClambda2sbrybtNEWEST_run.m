@@ -31,6 +31,7 @@ x0 = xinit;
 xsave = zeros(nx,tend+1);
 usave = zeros(nu,tend);
 zsave = zeros(nu,tend);
+lamsave = zeros(316, tend);
 %tosave = zeros(1,tend);
 %tcsave = zeros(1,tend);
 feasflag = 1;  %feasflag = 0 indicates infeasible problem.
@@ -151,7 +152,7 @@ for ik = 1:tend
     
   %   uvec = -Hinv*Gz'*lam - hif*x0;  
   %  u = uvec(1:nu);
-    
+    lamsave(:, ik+1)=lam;
     u = HGzu*lam+hifu*x0;
         
     % End solve implicit MPC problem

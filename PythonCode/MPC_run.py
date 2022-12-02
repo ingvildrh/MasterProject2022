@@ -26,7 +26,9 @@ x0 = xinit
 xsave = np.zeros((nx, tend+1))
 usave = np.zeros((nu, tend))
 zsave = np.zeros((nu, tend))
-
+HGzusave = np.zeros((316, 2*tend))
+lamsave = np.zeros((316, tend))
+hifusave = np.zeros((316, tend))
 feasflag = 1
 
 xsave[:,0:1]= xinit
@@ -42,10 +44,7 @@ hif = Hinv@f0
 
 HGz = -Hinv@np.transpose(Gz) 
 HGzu = HGz[0:nu, :]
-hifu = -hif[0:nu, :]
-
-
-
+hifu = -1*hif[0:nu, :]
 
 while_iterations1 = [] #for counting the while iterations in each step
 while_iterations2 = []
@@ -55,11 +54,13 @@ tot = timer()
 for i in range(tend):
     start = timer()
     feasflag = False
-    actset = np.zeros((nc,1))
     solved = False
     ix = 0
+
     #Qmat0i = np.identity(nc) before improvement 3
     Qmat0i = Qreset #improvement 3
+    actset = np.zeros((nc,1))
+
     y0 = np.subtract(-Sz.dot(x0), Wz)
     while (not (solved)):
         ix = ix +1
@@ -130,7 +131,8 @@ for i in range(tend):
         break
     
     #lam = np.multiply((actset),(y)) #element wise?
-
+    #lamsave[:, i] = np.transpose(lam)
+    #hifusave[:, i+1] = np.transpose(hifu)[i,:]
     u = HGzu@lam+hifu@x0
     x1 = A@x0+B@u
 

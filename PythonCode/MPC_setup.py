@@ -11,8 +11,6 @@ def deb(A):
 
 MODEL = 2
 
-
-
 if (MODEL == 1):
     A = np.array([[1, 1], [0, 1]])
     B = np.array([[1], [0.3]])
@@ -58,7 +56,6 @@ if (MODEL == 2):
     
 
 K, S, E = lqr(sys, Q, R) #stusser litt på at E ikke er identisk med matlab, men tror ikke det er av betydning
-
 
 Qh = daug(np.kron(np.identity(n-1), Q), S)
 

@@ -9,30 +9,29 @@ from scipy.sparse import csr_matrix
 import scipy.sparse as sp
 from scipy.optimize import minimize
 '''
-import time
+
 import datetime
 import cProfile
 
+from re import U
+import time
+from timeit import default_timer as timer
+import numpy as np
+arr = np.ones((100,1))
+arr2 = np.zeros((100,1))
+arr4 = np.zeros((100,1))
+start = timer()
+for i in range(100):
+    arr2[i] = arr[i][0]*2
+    arr4[i] = arr[i][0]*4
+end= timer()
+timetot = end-start
+print(timetot)
 
-def slow_add(a, b):
-    time.sleep(0.5)
-    return a+b
 
-def fast_add(a, b):
-    return a+b
+'''
+arr2 = arr*2
+arr4 = arr*4
 
-prof = cProfile.Profile()
 
-def main_func():
-    arr = []
-    prof.enable()
-    for i in range(10):
-
-        if i%2==0:
-            arr.append(slow_add(i,i))
-        else:
-            arr.append(fast_add(i,i))
-    prof.disable()
-    return arr
-
-main_func()
+'''
