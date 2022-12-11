@@ -31,6 +31,7 @@ x0 = xinit;
 xsave = zeros(nx,tend+1);
 usave = zeros(nu,tend);
 zsave = zeros(nu,tend);
+lamsave = zeros(316, tend);
 %tosave = zeros(1,tend);
 %tcsave = zeros(1,tend);
 feasflag = 1;  %feasflag = 0 indicates infeasible problem.
@@ -56,7 +57,7 @@ Qmat0i = speye(nc);
 tt = tic;
 %for ik = 1:1
 
-total_time = tic;
+tot = tic;
 for ik = 1:tend
     %ik;
     %Implicit MPC problem.  Hoping to do this efficiently...
@@ -151,7 +152,7 @@ for ik = 1:tend
     
   %   uvec = -Hinv*Gz'*lam - hif*x0;  
   %  u = uvec(1:nu);
-    
+    %lamsave(:, ik+1)=lam;
     u = HGzu*lam+hifu*x0;
         
     % End solve implicit MPC problem
@@ -173,7 +174,7 @@ for ik = 1:tend
    % tc = toc(tc);
    % tcsave(1,ik) = tc;
 end
-total_time = toc(tot)
+total_time = toc(tot);
 
 toc(tt)
 
@@ -184,29 +185,38 @@ if (Model == 1)
     plot(tx,xsave(1,:),'b',tx,xsave(2,:),'r')
     legend('x1', 'x2')
     ylabel('x')
-    xlabel('timestep')
+    xlabel('time step')
     title('State trajectories')
-
+    grid
     figure(2)
 
     tu = linspace(0,tend-1,tend);
     plot(tu,usave)
     ylabel('u')
-    xlabel('timestep')
+    xlabel('time step')
     title('System input')
-    
+    grid
     
 elseif (Model == 2)
     ym = C*xsave;                        
     figure(1)
     tx = linspace(0,tend,tend+1);
     plot(tx,ym(1,:),'b',tx,ym(2,:),'r')
+    legend('ym1', 'ym2')
+    xlabel('time step')
+    ylabel('ym')
     title('Output trajectories')
+    grid
 
 
     figure(2)
     tu = linspace(0,tend-1,tend);
     plot(tu,usave(1,:),'b',tu,usave(2,:),'r')
+    legend('u1', 'u2')
+    ylabel('u')
+    xlabel('time step')
+    title('Input trajectories')
+    grid
 elseif (Model == 3)
     ym = C*xsave;                        
     figure(1)

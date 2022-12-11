@@ -152,7 +152,7 @@ for ik = 1:tend
     
   %   uvec = -Hinv*Gz'*lam - hif*x0;  
   %  u = uvec(1:nu);
-    lamsave(:, ik+1)=lam;
+    %lamsave(:, ik+1)=lam;
     u = HGzu*lam+hifu*x0;
         
     % End solve implicit MPC problem
@@ -182,20 +182,24 @@ toc(tt)
 if (Model == 1)
     figure(1)
     tx = linspace(0,tend,tend+1);
-    plot(tx,xsave(1,:),'b',tx,xsave(2,:),'r')
+    plot(tx,xsave(1,:),'r',tx,xsave(2,:),'b','LineWidth',1.5)
     legend('x1', 'x2')
     ylabel('x')
     xlabel('time step')
     title('State trajectories')
-
+    grid
     figure(2)
 
     tu = linspace(0,tend-1,tend);
-    plot(tu,usave)
-    ylabel('u')
+    plot(tu,usave, 'b','LineWidth',1.5)
     xlabel('time step')
+    legend('u')
     title('System input')
+    set(gca, 'ylim', [-0.6 1]);
+    set(gca, 'xlim', [-5 100]);
     
+    
+    grid
     
 elseif (Model == 2)
     ym = C*xsave;                        
