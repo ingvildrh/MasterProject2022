@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-SLOW = 1 
+SLOW = 0 
 
 if (SLOW):
     from MPC_run_slow import *

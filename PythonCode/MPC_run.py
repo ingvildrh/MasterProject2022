@@ -73,9 +73,12 @@ for i in range(tend):
         #i1 = min(lam) before improvement 1
         i1=lam.min() #improvement 1
         i1z = np.argmin(lam)
+        print("For loop iteration number:", i)
+        print("while loop interation number:", ix)
+        print(y)
         if (i1>=0):
-            i1 = []
-        if (i1):
+            i1 = "NULL"
+        if (i1 != "NULL"):
             iz = i1z
             actset[iz] = 0 
             qc = 1
@@ -85,15 +88,15 @@ for i in range(tend):
             i2 = (y_lam).max() #improvement 1
             i2z = np.argmax(y_lam)
             if (i2 <= 0):
-                i2= []
-            if (i2): 
+                i2= "NULL"
+            if (i2 != "NULL"): 
                 iz = i2z
                 actset[iz] = 1
                 qc = -1
             else:
-                iz = []
+                iz = "NULL"
         
-        if (iz):
+        if (iz != "NULL"):
             qu = IGIs[:, iz]
             vA = np.transpose(np.matrix(Qmat0i@(qu)))
             qdiv = qc+vA[iz] 
