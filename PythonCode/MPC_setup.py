@@ -9,7 +9,7 @@ def deb(A):
     print("dimention:")
     print(A.shape)
 
-MODEL = 2
+MODEL = 1
 
 if (MODEL == 1):
     A = np.array([[1, 1], [0, 1]])

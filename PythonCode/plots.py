@@ -2,7 +2,7 @@ import numpy as np
 from MPC_run import *
 import matplotlib.pyplot as plt
 
-PYTHONPLOTS = 1
+PYTHONPLOTS = 0
 
 
 if (MODEL ==1):
@@ -82,7 +82,7 @@ if (MODEL == 2):
 if (PYTHONPLOTS):
     if (MODEL ==1):
         states = plt.figure(1)
-        plt.plot(np.arange(tend+1),xsave[0], color="green", label="x1")
+        plt.plot(np.arange(tend+1),xsave[0], color="red", label="x1")
         plt.plot(np.arange(tend+1), xsave[1], color="blue", label="x2")
         plt.title("State trajectories")
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
