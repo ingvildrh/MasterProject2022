@@ -1,8 +1,16 @@
 import numpy as np
-from MPC_run import *
 import matplotlib.pyplot as plt
 
-PYTHONPLOTS = 0
+SLOW = 1 
+
+if (SLOW):
+    from MPC_run_slow import *
+else:
+    from MPC_run import *
+
+PYTHONPLOTS = 1
+
+
 
 
 if (MODEL ==1):
@@ -104,8 +112,8 @@ if (PYTHONPLOTS):
     if (MODEL == 2):
         ym = C@xsave 
         output_trajectories = plt.figure(1)
-        plt.plot(np.arange(tend+1), ym[0], color="green", label="ym1")
-        plt.plot(np.arange(tend+1), ym[1], color="blue", label="ym2")
+        plt.plot(np.arange(tend+1), ym[0], color="blue", label="ym1")
+        plt.plot(np.arange(tend+1), ym[1], color="red", label="ym2")
         plt.title("Output trajectories")
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
         plt.xlabel("time step")
@@ -115,7 +123,7 @@ if (PYTHONPLOTS):
         
         ufig = plt.figure(2)
         plt.plot(np.arange(tend), usave[0], color="blue", label="u1")
-        plt.plot(np.arange(tend), usave[1], color="green", label="u2")
+        plt.plot(np.arange(tend), usave[1], color="red", label="u2")
         plt.title("Input trajectories")
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
         plt.xlabel("time step")
