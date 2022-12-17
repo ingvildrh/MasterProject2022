@@ -10,9 +10,11 @@ import cProfile
 
 from timeit import default_timer as timer
 
+#Time steps for the MPC
 tend = 100
 
-#@profile
+#code added to use line profiler in the lineproftest.py script
+
 #def main():
 if (MODEL == 1):
     xinit = np.matrix([[5], [-2]])
@@ -23,30 +25,27 @@ if (MODEL == 2):
 
 x0 = xinit
 
+#Allocating memory for filling in as the computations finish
 xsave = np.zeros((nx, tend+1))
 usave = np.zeros((nu, tend))
-zsave = np.zeros((nu, tend))
-HGzusave = np.zeros((316, 2*tend))
-lamsave = np.zeros((316, tend))
-hifusave = np.zeros((316, tend))
+
 feasflag = 1
 
 xsave[:,0:1]= xinit
 
 nc = np.shape(Gz)[0]
-Qreset = np.identity(nc) #improvement 3
-Hinv = np.linalg.inv(Hess) #stemmer
+Qreset = np.identity(nc) #improvement 3: making the Qreset matrix once, outside of the loop
+Hinv = np.linalg.inv(Hess) 
 GzHinv = Gz.dot(Hinv)
 GzHinvGz = GzHinv.dot(np.transpose(Gz))
 IGIs = np.subtract(Qreset, GzHinvGz)
-#IGi = np.subtract(np.identity(nc), (Gz.dot(Hinv)).dot(np.transpose(Gz)))
 hif = Hinv@f0
 
 HGz = -Hinv@np.transpose(Gz) 
 HGzu = HGz[0:nu, :]
 hifu = -1*hif[0:nu, :]
 
-while_iterations1 = [] #for counting the while iterations in each step
+while_iterations1 = [] 
 while_iterations2 = []
 
 tot = timer()
@@ -58,7 +57,7 @@ for i in range(tend):
     ix = 0
 
     #Qmat0i = np.identity(nc) before improvement 3
-    Qmat0i = Qreset #improvement 3
+    Qmat0i = Qreset #improvement 3: using the matrix made outside the loop
     actset = np.zeros((nc,1))
 
     y0 = np.subtract(-Sz.dot(x0), Wz)
@@ -71,32 +70,29 @@ for i in range(tend):
             y0 = y
         lam = np.multiply((y),actset)
         #i1 = min(lam) before improvement 1
-        i1=lam.min() #improvement 1
+        i1=lam.min() #improvement 1: using a NumPy function with vectorization
         i1z = np.argmin(lam)
-        print("For loop iteration number:", i)
-        print("while loop interation number:", ix)
-        print(y)
         if (i1>=0):
-            i1 = "NULL"
-        if (i1 != "NULL"):
+            i1 = None
+        if (i1 != None):
             iz = i1z
             actset[iz] = 0 
             qc = 1
         else:
             #i2 = max(y-lam) before improvement 1
             y_lam = y-lam
-            i2 = (y_lam).max() #improvement 1
+            i2 = (y_lam).max() #improvement 1: using a NumPy function with vectorization
             i2z = np.argmax(y_lam)
             if (i2 <= 0):
-                i2= "NULL"
-            if (i2 != "NULL"): 
+                i2= None
+            if (i2 != None): 
                 iz = i2z
                 actset[iz] = 1
                 qc = -1
             else:
-                iz = "NULL"
+                iz = None
         
-        if (iz != "NULL"):
+        if (iz != None):
             qu = IGIs[:, iz]
             vA = np.transpose(np.matrix(Qmat0i@(qu)))
             qdiv = qc+vA[iz] 
@@ -115,7 +111,6 @@ for i in range(tend):
             
             vAdQmat0i = vAd@np.matrix(Qmat0i[iz,:])
             Qmat1i = np.subtract(Qmat0i,  vAdQmat0i)
-            #Qmat1i = np.subtract(Qmat0i, vAd@np.matrix(Qmat0i[iz,:]))
 
             Qmat0i = Qmat1i
 
@@ -133,9 +128,6 @@ for i in range(tend):
     if (feasflag == 0):
         break
     
-    #lam = np.multiply((actset),(y)) #element wise?
-    #lamsave[:, i] = np.transpose(lam)
-    #hifusave[:, i+1] = np.transpose(hifu)[i,:]
     u = HGzu@lam+hifu@x0
     x1 = A@x0+B@u
 
@@ -144,20 +136,14 @@ for i in range(tend):
     usave[:, i] = np.transpose(u)
 
     if (MODEL ==1):
-        tosave1[0, i] = tk #this is in nano seconds
-
+        tosave1[0, i] = tk 
     if (MODEL ==2):
-        tosave2[0, i] = tk #this is in nano seconds
+        tosave2[0, i] = tk 
 
 end_tot = timer()
 total_time = end_tot-tot
 
-print("Total runtime s: ")
-print(total_time)
-        
-
-print("done")
-
+#code added to use line profiler in the lineproftest.py script
 #main()
 
 

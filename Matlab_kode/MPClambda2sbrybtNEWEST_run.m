@@ -195,7 +195,7 @@ if (Model == 1)
     xlabel('time step')
     legend('u')
     title('System input')
-    set(gca, 'ylim', [-0.6 1]);
+    set(gca, 'ylim', [-0.6 1.1]);
     set(gca, 'xlim', [-5 100]);
     
     

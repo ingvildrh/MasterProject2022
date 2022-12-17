@@ -88,12 +88,15 @@ if (MODEL == 2):
 
 #Just a plot similar to the one in matlab so that we can compare states and inputs with matlab
 if (PYTHONPLOTS):
-    if (MODEL ==1):
+    if (MODEL == 1):
         states = plt.figure(1)
         plt.plot(np.arange(tend+1),xsave[0], color="red", label="x1")
         plt.plot(np.arange(tend+1), xsave[1], color="blue", label="x2")
         plt.title("State trajectories")
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+        plt.xlim([0,100])
+        plt.ylim([-3,5])
+        plt.yticks([-3,-2,-1,0,1,2,3,4,5])
         plt.legend(loc="lower center",fontsize=10,ncol=2)
         plt.xlabel("time step")
         plt.ylabel("x")
@@ -104,8 +107,12 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend), usave[0], color="blue", label="u")
         plt.title("System input")
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+        plt.xlim([-5, 100])
+        plt.ylim([-0.6,1.1])
+        plt.yticks([-0.6,-0.4,-0.2,-0,0.2,0.4,0.6,0.8,1])
         plt.xlabel("time step")
         plt.ylabel("u")
+        plt.legend("u")
         plt.grid()
         plt.show()
 
@@ -115,7 +122,10 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend+1), ym[0], color="blue", label="ym1")
         plt.plot(np.arange(tend+1), ym[1], color="red", label="ym2")
         plt.title("Output trajectories")
+        plt.xlim([0,100])
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+        plt.ylim([-1.5, 1])
+        plt.yticks([-1.5,-1,-0.5,0,0.5,1])
         plt.xlabel("time step")
         plt.ylabel("ym")
         plt.legend(loc="lower center",fontsize=10,ncol=2)
@@ -125,7 +135,9 @@ if (PYTHONPLOTS):
         plt.plot(np.arange(tend), usave[0], color="blue", label="u1")
         plt.plot(np.arange(tend), usave[1], color="red", label="u2")
         plt.title("Input trajectories")
+        plt.xlim([0,100])
         plt.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+        plt.ylim([-0.7,0])
         plt.xlabel("time step")
         plt.legend(loc="lower center",fontsize=10,ncol=2)
         plt.ylabel("u")
